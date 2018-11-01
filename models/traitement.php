@@ -10,16 +10,11 @@ global $pdo;
             while($row1 = $req1->fetch())
             {  
                 $source = $row1["original_pic"];
-                $_SESSION['source']=  $source;
+                $_SESSION['source'] =  $source;
+                $_SESSION['idimg'] = $_POST['idimg'];
             }
 
 
- echo "<img style='width:550px; height:400px;'  src='$source' >";
-
-
-
-        
-
-
+ echo "<img style='width:550px; height:400px;'  src='../$source' >";
 
 ?>

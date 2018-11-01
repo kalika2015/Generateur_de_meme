@@ -5,7 +5,7 @@ $('.miniature').on('click',function() {
 
     $.ajax({
         type: "POST",
-        url: "models/traitement.php",
+        url: "../models/traitement.php",
         data: {'idimg': idimg},
         success: function(msg){
             $('#resultat').empty();
@@ -40,7 +40,7 @@ $('#haut').on('keyup',function() {
     var text= document.getElementById('haut').value;
     $.ajax({
         type: "POST",
-        url: "models/saisie.php",
+        url: "../models/saisie.php",
         data: {'text':text},
         success: function(msg){
             $('#divHaut').empty();
@@ -56,7 +56,7 @@ $('#bas').on('keyup',function() {
     console.log(textbas);
     $.ajax({
         type: "POST",
-        url: "models/saisie.php",
+        url: "../models/saisie.php",
         data: {'textbas':textbas},
         success: function(msg){
             $('#divBas').empty();
@@ -65,19 +65,59 @@ $('#bas').on('keyup',function() {
     });
 });
 
-
-
+/*
 $('#couleurTexte').on('change',function() {
     var couleurTexte= document.getElementById('couleurTexte').value;
     console.log(couleurTexte);
+    $('.txt').style.color = couleurTexte;
     $.ajax({
         type: "POST",
-        url: "couleur.php",
+        url: "models/couleur.php",
         data: {'couleurTexte':couleurTexte},
         success: function(msg)
         {
-
+            $('.txt').style.color = couleurTexte;
         }
     });
 });
-        
+*/
+
+document.querySelector("html").classList.add('js');
+
+var fileInput  = document.querySelector( ".input-file" ),
+    button     = document.querySelector( ".input-file-trigger" ),
+    the_return = document.querySelector(".file-return");
+
+button.addEventListener( "keydown", function( event ) {
+    if ( event.keyCode == 13 || event.keyCode == 32 ) {
+        fileInput.focus();
+    }
+});
+button.addEventListener( "click", function( event ) {
+    fileInput.focus();
+    return false;
+});
+fileInput.addEventListener( "change", function( event ) {
+    the_return.innerHTML = this.value;
+});
+
+
+
+$('.enregistrer').on('click',function() {
+    var capture = {};
+    var target = $('#boiteImg');
+    html2canvas(target, {
+        onrendered: function(canvas) {
+            capture.img = canvas.toDataURL( "image/png" );
+            capture.data = { 'image' : capture.img };
+            $.ajax({
+                url: "../models/ajax.php",
+                data: capture.data,
+                type: 'post',
+                success: function( result ) {
+                    console.log( result );
+                }
+            });
+        }
+    });
+});

@@ -5,7 +5,7 @@ if(isset($_POST['text']))
 {
 $text =$_POST['text'];
 ?>
-<p class="txt"><?= $text ?></p>
+<p class="txt" id="txt1"><?= $text ?></p>
 <?php
 $_SESSION['text']=$text;
 }
@@ -13,7 +13,7 @@ if(isset($_POST['textbas']))
 {
 $textbas =$_POST['textbas'];
 ?>
-<p class="txt"><?= $textbas ?></p>
+<p class="txt" id="txt2"><?= $textbas ?></p>
 <?php
 $_SESSION['textbas']=$textbas;
 }
