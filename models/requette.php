@@ -12,7 +12,8 @@ return $req1;
 function memes()
 {
     include('connexion.php');
-    $req1= $pdo->query("SELECT * FROM memes ORDER BY id_M DESC ");
+    $req1= $pdo->prepare("SELECT * FROM memes WHERE id_U = :idm ORDER BY id_M DESC ");
+    $req1->execute(['idm' => $_SESSION['id_U']]);
     return $req1;
 }
 

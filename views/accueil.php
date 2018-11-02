@@ -1,5 +1,5 @@
 <?php
-
+ini_set("display_errors",0);error_reporting(0);
 require '../models/requette.php';
 $imgs = imgs();
 $memes = memes();
@@ -11,12 +11,36 @@ $memes = memes();
     <meta charset="UTF-8">
     <title>Générateur de meme</title>
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/mine.css">
+    <link rel="icon" type="image/png" href="../assets/2.ico"/>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script>
+        window.history.forward();
+        function page() {
+            var w=window.document;
+            w.write("<HTML><HEAD><TITLE>NoBack (episode 2 ET FIN) !</TITLE>");
+            w.write("<script language=\"JavaScript\">window.history.forward();");
+            w.write("<\/SCRIPT>");
+            w.write("</HEAD><body onunload=\"window.history.forward();\">");
+            w.close;
+        }
+    </script>
 </head>
-<body>
+<body onunload="window.history.forward();">
 
+<section class="section1">
+    <img src="../assets/2.png" width="70" height="70" alt="images" class="imglog">
+    <div class="wrapper">
+        <h1 class="gamma light merriweather italic text-left">
+            Bienvenue <?php echo $_SESSION['pseudo'];?>
+            <a class="pic" href="../controleurs/logout.php"><img class="img" src="../assets/logout.png" width="30" height="30" alt=""></a>
+        </h1>
+    </div>
+
+</section>
 
 <div id="images">
     <?php  while($row1 = $imgs->fetch())
@@ -24,21 +48,11 @@ $memes = memes();
         <span><img class="image miniature" src="../<?= $row1["original_pic"]?>" alt="" >
             <input type="hidden" class="champCache" value="<?= $row1["id_O"] ?>"></span>
         <?php
-    }
-    if(isset($_SESSION['lastIdtele'] )) 
-    {
-        ?>
-        <article class="parentMini">
-            <img class="miniaturetele" src="../<?=$_SESSION['cheminTele']?>">;
-            <input class="champCache" type="hidden" name="id" value="<?= $_SESSION['lastIdtele'] ?>">;
-        </article> <br>
-        <?php
-    }
-    ?>
+    }?>
 </div>
 
 <section id="grandeBoite">
-        <article id="boiteImg">
+    <article id="boiteImg">
             <div id="resultat">
                 <img style="width: 550px; height: 400px;" src="../<?= $_SESSION['source'] ?>" alt="">
             </div>
@@ -56,27 +70,35 @@ $memes = memes();
                 <label tabindex="0" for="my-file" class="input-file-trigger">Nouvelle Image</label>
             </div>
             <p class="file-return"></p>
-            <input type="submit" value="Uploader" class="" name="upload" >
+            <input type="submit" value="Uploader" class="btn btn-primary" name="upload" >
         </form>
-        <h3>Écrivez votre texte : </h3>
+        <label for="" class="col-form-label-lg">Écrivez votre texte: </label>
         <form method="post" action="">
-            <label for="haut">Texte du haut : </label> <input type="text" name="Votre texte" id="haut" value=""><br><br>
-            <label for="bas">Texte du bas : </label> <input type="text" name="Votre texte" id="bas" value=""><br><br>
-            <label for="couleurTexte">Couleur : </label> <input type="color" id="couleurTexte" name="color" onchange="changeColor()">
-            <br><br><br><br>
-            <!--<a href="" class="boutonEnregistrer"> Enregistrer</a> &nbsp;-->
-            <input type="submit" class="enregistrer">
-            <input type="reset" value="Reset">
+            <div class="form-group">
+                <input type="text" id="haut" class="form-control form-control-sm" placeholder="Texte du haut">
+            </div>
+            <div class="form-group">
+                <input type="text" id="bas" class="form-control form-control-sm" placeholder="Texte du bas">
+            </div>
+            <div class="form-group">
+                <input type="color" id="couleurTexte" class="form-control form-control-sm" name="color" onchange="changeColor()">
+            </div>
+            <div class="form-group">
+                <a href="#" class="btn btn-primary enregistrer"> Enregistrer</a>
+                <input type="reset" class="btn btn-primary" value="Reset">
+            </div>
         </form>
     </article>
 </section>
 
 
-<div id="images">
+<div id="images" class="refresh">
     <?php  while($row2 = $memes->fetch())
     {?>
-        <span><img class="image" src="../<?= $row2["lien_M"]?>" alt="" >
-            <input type="hidden" class="champCache" value="<?= $row2["id_M"] ?>"></span>
+        <span>
+            <img class="image" src="../<?= $row2["lien_M"]?>" alt="" >
+            <input type="hidden" class="champCache" value="<?= $row2["id_M"] ?>">
+        </span>
         <?php
     }
     ?>
@@ -84,12 +106,7 @@ $memes = memes();
 
 
 <script src="../assets/js/main.js"></script>
-<script>
-    function changeColor() {
-        document.querySelector('#txt1').style.color = document.querySelector('#couleurTexte').value;
-        document.querySelector('#txt2').style.color = document.querySelector('#couleurTexte').value;
-    }
-</script>
+
 
 
 </body>

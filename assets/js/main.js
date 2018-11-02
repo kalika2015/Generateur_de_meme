@@ -14,27 +14,6 @@ $('.miniature').on('click',function() {
     });
 });
 
-$('.miniaturetele').on('click',function() {
-    var idimg = $(this).parent().find(".champCache").val();
-
-    $.ajax({
-        type: "POST",
-        url: "traitement2.php",
-        data: {'idimg': idimg}, // je passe la variable JS
-        success: function(msg){ // je récupère la réponse dans la variable msg
-            $('#resultat').empty();
-            $('#resultat').append(msg);
-        }
-    });
-
-
-
-
-});
-
-
-
-
 
 $('#haut').on('keyup',function() {
     var text= document.getElementById('haut').value;
@@ -116,8 +95,18 @@ $('.enregistrer').on('click',function() {
                 type: 'post',
                 success: function( result ) {
                     console.log( result );
+                    setInterval(refresh(), 10000);
                 }
             });
         }
     });
 });
+
+function changeColor() {
+    document.querySelector('#txt1').style.color = document.querySelector('#couleurTexte').value;
+    document.querySelector('#txt2').style.color = document.querySelector('#couleurTexte').value;
+}
+
+function refresh() {
+   location.reload(true);
+}

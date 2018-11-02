@@ -22,7 +22,7 @@ if (isset($_POST['upload'])){
                 'original_pic' => $chemin
             ]);
         }
-        header('location: ../');
+        header('location: ../views/accueil.php');
     } else {
         echo $error;
     }
